@@ -1,0 +1,18 @@
+{
+  "id": "evt_test_checkout",
+  "object": "event",
+  "type": "checkout.session.completed",
+  "created": 1760184000,
+  "livemode": false,
+  "data": {
+    "object": {
+      "id": "cs_test_123",
+      "object": "checkout.session",
+      "mode": "subscription",
+      "customer": "cus_Test",
+      "subscription": "sub_Test",
+      "client_reference_id": "a3c9e2d1-5f4b-4e6a-9c8d-7b1a0f2e3d45",
+      "metadata": { "tenantId": "a3c9e2d1-5f4b-4e6a-9c8d-7b1a0f2e3d45", "planCode": "PRO" }
+    }
+  }
+}

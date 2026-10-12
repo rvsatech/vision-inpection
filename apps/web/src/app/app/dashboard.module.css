@@ -1,0 +1,47 @@
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  background: var(--white);
+  border: 1px solid var(--steel-200);
+  border-radius: var(--r-md);
+}
+.kpi {
+  display: grid;
+  gap: 4px;
+  padding: 18px 20px;
+  border-left: 1px solid var(--steel-200);
+}
+.kpi:first-child {
+  border-left: 0;
+}
+.kpiLabel {
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+.kpiValue {
+  font-family: var(--font-cond);
+  font-size: var(--t-3xl);
+  font-weight: 600;
+  line-height: 1.1;
+}
+.kpiFail {
+  color: var(--fault);
+}
+.kpiFoot {
+  font-size: var(--t-xs);
+  color: var(--steel-500);
+}
+a.kpiFoot {
+  color: var(--petrol);
+}
+@media (max-width: 900px) {
+  .kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kpi:nth-child(3) {
+    border-left: 0;
+  }
+  .kpi:nth-child(n + 3) {
+    border-top: 1px solid var(--steel-200);
+  }
+}

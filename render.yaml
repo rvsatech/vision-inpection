@@ -1,0 +1,44 @@
+# Blueprint do Render (https://render.com/docs/blueprint-spec) — plano gratuito.
+# Render → New → Blueprint → selecione este repositório. Preencha os valores "sync: false" no painel.
+services:
+  - type: web
+    name: vision-inspect-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: false # o deploy é disparado pelo GitHub Actions após o CI verde
+    envVars:
+      - { key: NODE_ENV, value: production }
+      - { key: DATABASE_URL, sync: false }
+      - { key: DIRECT_DATABASE_URL, sync: false }
+      - { key: REDIS_URL, sync: false }
+      - { key: APP_URL, sync: false }
+      - { key: CORS_ORIGINS, sync: false }
+      - { key: JWT_ACCESS_SECRET, generateValue: true }
+      - { key: INTERNAL_API_TOKEN, sync: false }
+      - { key: COOKIE_SECURE, value: 'true' }
+      - { key: STORAGE_DRIVER, value: supabase }
+      - { key: SUPABASE_URL, sync: false }
+      - { key: SUPABASE_SERVICE_ROLE_KEY, sync: false }
+      - { key: SUPABASE_BUCKET, value: inspections }
+      - { key: STRIPE_SECRET_KEY, sync: false }
+      - { key: STRIPE_PRICE_STARTER, sync: false }
+      - { key: STRIPE_PRICE_PRO, sync: false }
+
+  - type: web
+    name: vision-inspect-worker
+    runtime: docker
+    plan: free
+    dockerfilePath: ./services/worker/Dockerfile
+    dockerContext: ./services/worker
+    healthCheckPath: /healthz
+    autoDeploy: false
+    envVars:
+      - { key: REDIS_URL, sync: false }
+      - { key: API_INTERNAL_URL, sync: false }
+      - { key: VISION_URL, sync: false }
+      - { key: INTERNAL_API_TOKEN, sync: false }
+      - { key: STRIPE_WEBHOOK_SECRET, sync: false }
+      - { key: WORKER_CONCURRENCY, value: '2' }

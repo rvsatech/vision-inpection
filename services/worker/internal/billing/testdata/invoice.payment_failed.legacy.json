@@ -1,0 +1,16 @@
+{
+  "id": "evt_test_invoice_failed",
+  "type": "invoice.payment_failed",
+  "created": 1760184000,
+  "livemode": false,
+  "data": {
+    "object": {
+      "customer": { "id": "cus_Test", "object": "customer" },
+      "subscription": "sub_Test",
+      "amount_paid": 0,
+      "amount_due": 189000,
+      "currency": "brl",
+      "lines": { "data": [] }
+    }
+  }
+}

@@ -1,0 +1,869 @@
+[
+  {
+    "file": "defect_00.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 3
+    },
+    "truth": [
+      {
+        "label": "scratch",
+        "box": [
+          515,
+          256,
+          214,
+          10
+        ]
+      },
+      {
+        "label": "scratch",
+        "box": [
+          578,
+          294,
+          129,
+          228
+        ]
+      },
+      {
+        "label": "spot",
+        "box": [
+          719,
+          433,
+          36,
+          20
+        ]
+      }
+    ]
+  },
+  {
+    "file": "count_00.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 9
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          511,
+          83,
+          108,
+          115
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          658,
+          236,
+          115,
+          134
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          37,
+          414,
+          105,
+          132
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          339,
+          268,
+          96,
+          131
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          61,
+          63,
+          105,
+          125
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          817,
+          237,
+          108,
+          122
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          646,
+          412,
+          105,
+          106
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          361,
+          64,
+          114,
+          134
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          32,
+          263,
+          110,
+          109
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_00.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 3,
+      "noHelmet": 2,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          136,
+          328,
+          60,
+          265
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": false,
+        "vest": true,
+        "box": [
+          423,
+          268,
+          70,
+          310
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": false,
+        "vest": true,
+        "box": [
+          752,
+          277,
+          68,
+          298
+        ]
+      }
+    ]
+  },
+  {
+    "file": "defect_01.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 0
+    },
+    "truth": []
+  },
+  {
+    "file": "count_01.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 6
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          793,
+          255,
+          106,
+          121
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          217,
+          421,
+          104,
+          113
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          348,
+          461,
+          104,
+          104
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          653,
+          422,
+          103,
+          112
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          791,
+          101,
+          109,
+          104
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          642,
+          270,
+          108,
+          132
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_01.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 2,
+      "noHelmet": 0,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          106,
+          275,
+          70,
+          310
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          735,
+          266,
+          71,
+          312
+        ]
+      }
+    ]
+  },
+  {
+    "file": "defect_02.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 4
+    },
+    "truth": [
+      {
+        "label": "scratch",
+        "box": [
+          487,
+          460,
+          111,
+          161
+        ]
+      },
+      {
+        "label": "scratch",
+        "box": [
+          529,
+          548,
+          244,
+          73
+        ]
+      },
+      {
+        "label": "spot",
+        "box": [
+          116,
+          137,
+          20,
+          18
+        ]
+      },
+      {
+        "label": "spot",
+        "box": [
+          228,
+          381,
+          36,
+          30
+        ]
+      }
+    ]
+  },
+  {
+    "file": "count_02.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 9
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          656,
+          245,
+          96,
+          133
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          184,
+          268,
+          101,
+          108
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          512,
+          282,
+          116,
+          121
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          211,
+          416,
+          103,
+          128
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          184,
+          108,
+          115,
+          119
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          336,
+          260,
+          96,
+          122
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          781,
+          68,
+          97,
+          106
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          661,
+          452,
+          116,
+          121
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          804,
+          444,
+          108,
+          123
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_02.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 2,
+      "noHelmet": 1,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          115,
+          310,
+          61,
+          268
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": false,
+        "vest": true,
+        "box": [
+          768,
+          295,
+          63,
+          275
+        ]
+      }
+    ]
+  },
+  {
+    "file": "defect_03.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 0
+    },
+    "truth": []
+  },
+  {
+    "file": "count_03.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 14
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          340,
+          66,
+          115,
+          121
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          363,
+          438,
+          93,
+          106
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          631,
+          90,
+          97,
+          112
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          52,
+          443,
+          93,
+          111
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          205,
+          107,
+          109,
+          104
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          359,
+          239,
+          93,
+          110
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          816,
+          452,
+          98,
+          109
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          803,
+          234,
+          107,
+          123
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          480,
+          80,
+          93,
+          108
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          490,
+          252,
+          106,
+          116
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          39,
+          119,
+          104,
+          107
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          521,
+          449,
+          102,
+          123
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          37,
+          268,
+          96,
+          117
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          644,
+          432,
+          107,
+          110
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_03.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 3,
+      "noHelmet": 0,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          111,
+          297,
+          64,
+          281
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          473,
+          270,
+          70,
+          308
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          753,
+          294,
+          65,
+          284
+        ]
+      }
+    ]
+  },
+  {
+    "file": "defect_04.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 3
+    },
+    "truth": [
+      {
+        "label": "scratch",
+        "box": [
+          51,
+          382,
+          85,
+          179
+        ]
+      },
+      {
+        "label": "spot",
+        "box": [
+          176,
+          279,
+          24,
+          32
+        ]
+      },
+      {
+        "label": "spot",
+        "box": [
+          368,
+          543,
+          34,
+          28
+        ]
+      }
+    ]
+  },
+  {
+    "file": "count_04.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 5
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          517,
+          420,
+          101,
+          134
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          807,
+          76,
+          114,
+          129
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          209,
+          417,
+          116,
+          120
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          630,
+          77,
+          114,
+          118
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          210,
+          241,
+          116,
+          119
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_04.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 3,
+      "noHelmet": 2,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          121,
+          319,
+          60,
+          262
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": false,
+        "vest": true,
+        "box": [
+          474,
+          290,
+          68,
+          298
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": false,
+        "vest": true,
+        "box": [
+          743,
+          261,
+          72,
+          318
+        ]
+      }
+    ]
+  },
+  {
+    "file": "defect_05.jpg",
+    "service": "QUALITY_DEFECT",
+    "expected": {
+      "defects": 0
+    },
+    "truth": []
+  },
+  {
+    "file": "count_05.jpg",
+    "service": "OBJECT_COUNT",
+    "expected": {
+      "count": 6
+    },
+    "truth": [
+      {
+        "label": "box",
+        "box": [
+          514,
+          61,
+          103,
+          115
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          214,
+          449,
+          103,
+          121
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          367,
+          61,
+          109,
+          126
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          359,
+          243,
+          116,
+          131
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          362,
+          413,
+          111,
+          122
+        ]
+      },
+      {
+        "label": "box",
+        "box": [
+          180,
+          117,
+          102,
+          115
+        ]
+      }
+    ]
+  },
+  {
+    "file": "ppe_05.jpg",
+    "service": "PPE_COMPLIANCE",
+    "expected": {
+      "persons": 2,
+      "noHelmet": 0,
+      "noVest": 0
+    },
+    "truth": [
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          122,
+          300,
+          63,
+          275
+        ]
+      },
+      {
+        "label": "person",
+        "helmet": true,
+        "vest": true,
+        "box": [
+          769,
+          335,
+          59,
+          259
+        ]
+      }
+    ]
+  }
+]

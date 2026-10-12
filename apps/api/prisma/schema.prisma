@@ -1,0 +1,215 @@
+// Vision Inspect — modelo de dados
+// Convenções: modelos em PascalCase mapeados para tabelas snake_case no plural.
+// IDs são UUID gerados pela aplicação. Toda entidade de negócio pertence a um tenant.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "cjs"
+  importFileExtension = ""
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  PLATFORM_ADMIN
+  OWNER
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum TenantStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}
+
+enum VisionService {
+  QUALITY_DEFECT
+  PPE_COMPLIANCE
+  OBJECT_COUNT
+}
+
+enum AnalysisStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum Verdict {
+  PASS
+  FAIL
+  INFO
+}
+
+model Tenant {
+  id               String        @id @default(uuid()) @db.Uuid
+  name             String
+  slug             String        @unique
+  document         String?
+  segment          String?
+  status           TenantStatus  @default(ACTIVE)
+  stripeCustomerId String?       @unique
+  storageBytesUsed BigInt        @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  users            User[]
+  subscription     Subscription?
+  analyses         Analysis[]
+
+  @@map("tenants")
+}
+
+model User {
+  id           String           @id @default(uuid()) @db.Uuid
+  tenantId     String           @db.Uuid
+  email        String           @unique
+  name         String
+  passwordHash String
+  role         Role             @default(OPERATOR)
+  status       UserStatus       @default(ACTIVE)
+  lastLoginAt  DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  tenant       Tenant           @relation(fields: [tenantId], references: [id])
+  sessions     RefreshSession[]
+  analyses     Analysis[]
+
+  @@index([tenantId])
+  @@map("users")
+}
+
+model RefreshSession {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  familyId   String    @db.Uuid
+  tokenHash  String    @unique
+  userAgent  String?
+  ip         String?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime  @default(now())
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_sessions")
+}
+
+model Plan {
+  id                  String          @id @default(uuid()) @db.Uuid
+  code                String          @unique
+  name                String
+  description         String
+  priceCents          Int
+  currency            String          @default("brl")
+  stripePriceId       String?
+  maxUsers            Int
+  maxAnalysesPerMonth Int
+  maxStorageMb        Int
+  services            VisionService[]
+  isPublic            Boolean         @default(true)
+  sortOrder           Int             @default(0)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  subscriptions       Subscription[]
+
+  @@map("plans")
+}
+
+model Subscription {
+  id                   String             @id @default(uuid()) @db.Uuid
+  tenantId             String             @unique @db.Uuid
+  planId               String             @db.Uuid
+  status               SubscriptionStatus
+  trialEndsAt          DateTime?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean            @default(false)
+  canceledAt           DateTime?
+  pastDueSince         DateTime?
+  stripeSubscriptionId String?            @unique
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  tenant               Tenant             @relation(fields: [tenantId], references: [id])
+  plan                 Plan               @relation(fields: [planId], references: [id])
+
+  @@index([status])
+  @@map("subscriptions")
+}
+
+/// Eventos de cobrança já aplicados — garante idempotência dos webhooks.
+model BillingEvent {
+  id          String   @id
+  tenantId    String?  @db.Uuid
+  type        String
+  payload     Json
+  processedAt DateTime @default(now())
+
+  @@index([tenantId, processedAt])
+  @@map("billing_events")
+}
+
+/// Trilha de auditoria. Sem FKs de propósito: o registro sobrevive a mudanças nas entidades.
+model AuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  tenantId    String?  @db.Uuid
+  actorId     String?  @db.Uuid
+  action      String
+  entityType  String?
+  entityId    String?
+  metadata    Json?
+  ip          String?
+  createdAt   DateTime @default(now())
+
+  @@index([tenantId, createdAt])
+  @@index([action])
+  @@map("audit_logs")
+}
+
+model Analysis {
+  id            String         @id @default(uuid()) @db.Uuid
+  tenantId      String         @db.Uuid
+  requestedById String         @db.Uuid
+  service       VisionService
+  status        AnalysisStatus @default(QUEUED)
+  imageStorage  String
+  imageKey      String
+  contentType   String
+  sizeBytes     Int
+  originalName  String
+  attempts      Int            @default(0)
+  verdict       Verdict?
+  headline      String?
+  result        Json?
+  failureReason String?
+  queuedAt      DateTime       @default(now())
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  tenant        Tenant         @relation(fields: [tenantId], references: [id])
+  requestedBy   User           @relation(fields: [requestedById], references: [id])
+
+  @@index([tenantId, createdAt])
+  @@index([tenantId, service])
+  @@index([status, queuedAt])
+  @@map("analyses")
+}

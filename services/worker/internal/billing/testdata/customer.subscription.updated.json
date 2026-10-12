@@ -1,0 +1,17 @@
+{
+  "id": "evt_test_sub_updated",
+  "type": "customer.subscription.updated",
+  "created": 1760184000,
+  "livemode": false,
+  "data": {
+    "object": {
+      "id": "sub_Test",
+      "object": "subscription",
+      "customer": "cus_Test",
+      "status": "past_due",
+      "cancel_at_period_end": true,
+      "metadata": { "tenantId": "a3c9e2d1-5f4b-4e6a-9c8d-7b1a0f2e3d45" },
+      "items": { "data": [ { "current_period_start": 1760184000, "current_period_end": 1762862400, "price": { "id": "price_pro" } } ] }
+    }
+  }
+}

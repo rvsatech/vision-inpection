@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vision.infer.request.v1",
+  "title": "Requisição de inferência (Worker → Visão)",
+  "type": "object",
+  "required": ["analysisId", "service", "image"],
+  "properties": {
+    "analysisId": { "type": "string" },
+    "service": { "enum": ["QUALITY_DEFECT", "PPE_COMPLIANCE", "OBJECT_COUNT"] },
+    "image": {
+      "type": "object",
+      "required": ["storage", "key"],
+      "properties": {
+        "storage": { "enum": ["local", "supabase"] },
+        "key": { "type": "string" },
+        "url": { "type": "string" },
+        "contentType": { "type": "string" }
+      }
+    },
+    "options": {
+      "type": "object",
+      "properties": { "confidenceThreshold": { "type": "number" } }
+    }
+  }
+}

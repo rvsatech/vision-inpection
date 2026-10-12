@@ -1,0 +1,125 @@
+/* Blocos de UI do app. Painéis = superfícies brancas com borda; raio menor que botões de destaque. */
+.panel {
+  background: var(--white);
+  border: 1px solid var(--steel-200);
+  border-radius: var(--r-md);
+}
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--steel-200);
+}
+.panelTitle {
+  font-family: var(--font-cond);
+  font-size: var(--t-lg);
+  font-weight: 600;
+}
+.panelBody {
+  padding: 18px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+}
+.table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--steel-500);
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--steel-200);
+  white-space: nowrap;
+}
+.table td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--steel-100);
+  vertical-align: middle;
+}
+.table tr:last-child td {
+  border-bottom: 0;
+}
+.table a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+.table a:hover {
+  text-decoration: underline;
+}
+.tableWrap {
+  overflow-x: auto;
+}
+.muted {
+  color: var(--steel-500);
+}
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 40px 18px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: var(--t-sm);
+}
+.empty strong {
+  display: block;
+  color: var(--ink);
+  font-size: var(--t-md);
+  margin-bottom: 4px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+.stack {
+  display: grid;
+  gap: 20px;
+}
+.formGrid {
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+}
+.actionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meter {
+  height: 6px;
+  background: var(--steel-100);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.meterFill {
+  height: 100%;
+  background: var(--petrol);
+}
+.meterHigh {
+  background: var(--amber);
+}
+
+.dialog {
+  border: 1px solid var(--steel-300);
+  border-radius: var(--r-md);
+  padding: 0;
+  width: min(480px, calc(100vw - 32px));
+}
+.dialog::backdrop {
+  background: rgba(29, 39, 45, 0.45);
+}
+
+@media (max-width: 900px) {
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+}

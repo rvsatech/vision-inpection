@@ -1,0 +1,18 @@
+{
+  "analysisId": "0d5e8f8a-1b7c-4f0e-8a51-3c9d2e7b6a40",
+  "service": "PPE_COMPLIANCE",
+  "mode": "heuristic",
+  "modelVersion": "ppe-heuristic-1.0",
+  "latencyMs": 42.7,
+  "image": { "width": 960, "height": 640 },
+  "summary": {
+    "verdict": "FAIL",
+    "headline": "1 de 3 colaboradores sem capacete",
+    "metrics": { "persons": 3, "violations": 1, "complianceRate": 0.667 }
+  },
+  "detections": [
+    { "label": "person:compliant", "confidence": 0.81, "bbox": { "x": 0.1, "y": 0.2, "w": 0.12, "h": 0.6 }, "severity": "info" },
+    { "label": "person:compliant", "confidence": 0.78, "bbox": { "x": 0.42, "y": 0.22, "w": 0.12, "h": 0.58 }, "severity": "info" },
+    { "label": "person:no_helmet", "confidence": 0.74, "bbox": { "x": 0.74, "y": 0.21, "w": 0.12, "h": 0.6 }, "severity": "critical" }
+  ]
+}

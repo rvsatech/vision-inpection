@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "analysis.callback.v1",
+  "title": "Callbacks do worker para a API",
+  "oneOf": [
+    {
+      "title": "started",
+      "type": "object",
+      "required": ["attempt", "workerId"],
+      "properties": { "attempt": { "type": "integer", "minimum": 1 }, "workerId": { "type": "string" } }
+    },
+    {
+      "title": "completed",
+      "type": "object",
+      "required": ["attempt", "result"],
+      "properties": { "attempt": { "type": "integer" }, "result": { "$ref": "vision.infer.response.v1" } }
+    },
+    {
+      "title": "failed",
+      "type": "object",
+      "required": ["attempt", "reason"],
+      "properties": { "attempt": { "type": "integer" }, "reason": { "type": "string" } }
+    }
+  ]
+}

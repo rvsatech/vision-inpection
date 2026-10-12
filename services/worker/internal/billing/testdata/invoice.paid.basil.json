@@ -1,0 +1,25 @@
+{
+  "id": "evt_test_invoice_paid",
+  "object": "event",
+  "type": "invoice.paid",
+  "created": 1760184000,
+  "livemode": false,
+  "data": {
+    "object": {
+      "id": "in_test",
+      "object": "invoice",
+      "customer": "cus_Test",
+      "amount_paid": 189000,
+      "amount_due": 189000,
+      "currency": "brl",
+      "parent": {
+        "type": "subscription_details",
+        "subscription_details": {
+          "subscription": "sub_Test",
+          "metadata": { "tenantId": "a3c9e2d1-5f4b-4e6a-9c8d-7b1a0f2e3d45", "planCode": "PRO" }
+        }
+      },
+      "lines": { "data": [ { "period": { "start": 1760184000, "end": 1762862400 } } ] }
+    }
+  }
+}

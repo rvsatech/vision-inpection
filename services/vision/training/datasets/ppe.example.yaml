@@ -1,0 +1,10 @@
+# Exemplo de data.yaml para EPI (classes compatíveis com o pós-processamento em app/detectors/yolo.py)
+path: ../datasets/ppe
+train: images/train
+val: images/val
+names:
+  0: person
+  1: hardhat
+  2: no-hardhat
+  3: safety vest
+  4: no-safety vest

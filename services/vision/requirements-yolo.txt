@@ -1,0 +1,4 @@
+# Backend YOLO (opcional). Instala PyTorch — ~1–2 GB. Para CPU apenas:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   pip install -r requirements-yolo.txt
+ultralytics>=8.3,<9

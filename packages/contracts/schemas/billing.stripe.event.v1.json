@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "billing.stripe.event.v1",
+  "title": "Evento de cobrança normalizado (Worker → API)",
+  "description": "O worker valida a assinatura do webhook do Stripe, deduplica e traduz o payload do Stripe para este formato estável. A API nunca depende do formato bruto do Stripe.",
+  "type": "object",
+  "required": ["eventId", "type", "occurredAt", "data"],
+  "properties": {
+    "eventId": { "type": "string", "description": "id do evento no Stripe (evt_...) — chave de idempotência." },
+    "type": {
+      "enum": [
+        "checkout.completed",
+        "invoice.paid",
+        "invoice.payment_failed",
+        "subscription.updated",
+        "subscription.canceled"
+      ]
+    },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "livemode": { "type": "boolean" },
+    "data": {
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "planCode": { "type": "string" },
+        "customerId": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "status": { "type": "string", "description": "status bruto do Stripe (active, past_due, canceled, ...)" },
+        "currentPeriodEnd": { "type": "string", "format": "date-time" },
+        "cancelAtPeriodEnd": { "type": "boolean" },
+        "amount": { "type": "integer", "description": "em centavos" },
+        "currency": { "type": "string" }
+      }
+    }
+  }
+}

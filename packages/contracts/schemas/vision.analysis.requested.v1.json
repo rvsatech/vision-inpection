@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vision.analysis.requested.v1",
+  "title": "Pedido de análise de visão computacional",
+  "type": "object",
+  "required": ["eventId", "eventType", "version", "occurredAt", "data"],
+  "additionalProperties": false,
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid" },
+    "eventType": { "const": "vision.analysis.requested" },
+    "version": { "const": 1 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "data": {
+      "type": "object",
+      "required": ["analysisId", "tenantId", "service", "image"],
+      "additionalProperties": false,
+      "properties": {
+        "analysisId": { "type": "string", "format": "uuid" },
+        "tenantId": { "type": "string", "format": "uuid" },
+        "service": { "enum": ["QUALITY_DEFECT", "PPE_COMPLIANCE", "OBJECT_COUNT"] },
+        "image": { "$ref": "#/$defs/imageRef" },
+        "options": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "confidenceThreshold": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "imageRef": {
+      "type": "object",
+      "required": ["storage", "key", "contentType"],
+      "additionalProperties": false,
+      "properties": {
+        "storage": { "enum": ["local", "supabase"] },
+        "key": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri", "description": "URL assinada e temporária (storage remoto)." },
+        "contentType": { "enum": ["image/jpeg", "image/png", "image/webp"] }
+      }
+    }
+  }
+}

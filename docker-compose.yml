@@ -1,0 +1,115 @@
+# Ambiente local completo:   docker compose up -d --build
+# Só a infraestrutura:       docker compose up -d postgres redis
+name: vision-inspect
+
+x-api-env: &api-env
+  # Compose é o ambiente LOCAL: em "production" a API recusa os segredos de exemplo do .env.example.
+  NODE_ENV: ${NODE_ENV:-development}
+  DATABASE_URL: postgresql://${POSTGRES_USER:-vision}:${POSTGRES_PASSWORD:-vision}@postgres:5432/${POSTGRES_DB:-vision}
+  DIRECT_DATABASE_URL: postgresql://${POSTGRES_USER:-vision}:${POSTGRES_PASSWORD:-vision}@postgres:5432/${POSTGRES_DB:-vision}
+  REDIS_URL: redis://redis:6379
+  APP_URL: ${APP_URL:-http://localhost:3000}
+  CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+  JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?defina JWT_ACCESS_SECRET no .env}
+  INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:?defina INTERNAL_API_TOKEN no .env}
+  COOKIE_SECURE: "false"
+  STORAGE_DRIVER: local
+  STORAGE_DIR: /data/storage
+  STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+  STRIPE_PRICE_STARTER: ${STRIPE_PRICE_STARTER:-}
+  STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
+  TRIAL_DAYS: ${TRIAL_DAYS:-14}
+  SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+  SEED_DEMO_PASSWORD: ${SEED_DEMO_PASSWORD:-}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vision}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vision}
+      POSTGRES_DB: ${POSTGRES_DB:-vision}
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vision}"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    # AOF: as filas (Redis Streams) sobrevivem a um restart do container.
+    command: ["redis-server", "--appendonly", "yes"]
+    ports: ["6379:6379"]
+    volumes: [redisdata:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  # Executa as migrations e o seed de demonstração e termina.
+  migrate:
+    build: { context: ., dockerfile: apps/api/Dockerfile, target: build }
+    user: node
+    environment: *api-env
+    command: ["sh", "-c", "npx prisma migrate deploy && npx tsx prisma/seed.ts"]
+    volumes: [storage:/data/storage]
+    depends_on:
+      postgres: { condition: service_healthy }
+    restart: "no"
+
+  api:
+    build: { context: ., dockerfile: apps/api/Dockerfile }
+    environment: *api-env
+    ports: ["4000:4000"]
+    volumes: [storage:/data/storage]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+
+  worker:
+    build: { context: services/worker }
+    environment:
+      REDIS_URL: redis://redis:6379
+      API_INTERNAL_URL: http://api:4000
+      VISION_URL: http://vision:8000
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY:-4}
+      WORKER_MAX_ATTEMPTS: ${WORKER_MAX_ATTEMPTS:-3}
+    ports: ["8080:8080"]
+    depends_on:
+      redis: { condition: service_healthy }
+      api: { condition: service_healthy }
+
+  vision:
+    build:
+      context: services/vision
+      args:
+        WITH_YOLO: ${VISION_WITH_YOLO:-false}
+    environment:
+      VISION_STORAGE_DIR: /data/storage
+      VISION_BACKEND: ${VISION_BACKEND:-auto}
+    ports: ["8000:8000"]
+    volumes:
+      - storage:/data/storage:ro
+      - ./services/vision/models:/app/models:ro
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        API_URL: http://api:4000
+        NEXT_PUBLIC_DEMO_MODE: ${NEXT_PUBLIC_DEMO_MODE:-true}
+    ports: ["3000:3000"]
+    depends_on:
+      api: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  redisdata:
+  storage:

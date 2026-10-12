@@ -1,0 +1,138 @@
+.boot {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--steel-500);
+}
+.shell {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  background: var(--ink);
+  color: #fff;
+}
+.brand {
+  padding: 4px 10px 22px;
+  text-decoration: none;
+}
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.navLink,
+.navActive {
+  display: block;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  font-size: var(--t-sm);
+  text-decoration: none;
+  color: #c4ced3;
+}
+.navLink:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.navActive {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 3px 0 0 var(--amber);
+}
+.me {
+  margin-top: auto;
+  padding: 14px 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  gap: 2px;
+  font-size: var(--t-sm);
+}
+.meName {
+  font-weight: 500;
+}
+.meRole {
+  color: #9fb0b8;
+  font-size: var(--t-xs);
+}
+.logout {
+  justify-self: start;
+  margin-top: 8px;
+  padding: 0;
+  font: inherit;
+  font-size: var(--t-sm);
+  color: #c4ced3;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.main {
+  min-width: 0;
+  padding: 28px clamp(16px, 3vw, 40px) 64px;
+}
+.mobileBar {
+  display: none;
+}
+.pageHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.pageTitle {
+  font-size: var(--t-2xl);
+}
+.pageDesc {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: var(--t-sm);
+  max-width: 70ch;
+}
+.pageActions {
+  display: flex;
+  gap: 8px;
+}
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 860px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: fixed;
+    z-index: 30;
+    inset: 0 auto 0 0;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+  }
+  .sidebarOpen {
+    transform: none;
+  }
+  .mobileBar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: -12px 0 16px;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "eventId": "evt_1QExampleInvoicePaid",
+  "type": "invoice.paid",
+  "occurredAt": "2026-10-11T12:00:00.000Z",
+  "livemode": false,
+  "data": {
+    "tenantId": "a3c9e2d1-5f4b-4e6a-9c8d-7b1a0f2e3d45",
+    "customerId": "cus_TestCustomer",
+    "subscriptionId": "sub_TestSubscription",
+    "status": "active",
+    "currentPeriodEnd": "2026-11-11T12:00:00.000Z",
+    "amount": 149000,
+    "currency": "brl"
+  }
+}

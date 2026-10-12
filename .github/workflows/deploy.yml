@@ -1,0 +1,40 @@
+name: Deploy
+
+# Semi-automático: dispara depois de um CI verde na main, ou manualmente.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      HAS_API_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_API != '' }}
+      HAS_WORKER_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_WORKER != '' }}
+      HAS_HF: ${{ secrets.HF_TOKEN != '' }}
+    steps:
+      # Frontend: a Vercel faz o deploy sozinha a partir do GitHub (integração nativa).
+      - name: API (Render — deploy hook)
+        if: env.HAS_API_HOOK == 'true'
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_API }}"
+      - name: Worker (Render — deploy hook)
+        if: env.HAS_WORKER_HOOK == 'true'
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_WORKER }}"
+      - uses: actions/checkout@v4
+        if: env.HAS_HF == 'true'
+      - name: Serviço de visão (Hugging Face Space)
+        if: env.HAS_HF == 'true'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}
+        run: |
+          cd services/vision
+          git init -q && git checkout -q -b main
+          cp ../../infra/huggingface/README.md README.md
+          git add -A && git -c user.email=ci@visioninspect.com.br -c user.name=ci commit -qm "deploy ${GITHUB_SHA::7}"
+          git push -f "https://user:${HF_TOKEN}@huggingface.co/spaces/${HF_SPACE}" main

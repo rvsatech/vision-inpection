@@ -1,0 +1,49 @@
+# deps
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# builds
+dist/
+.next/
+out/
+coverage/
+bin/
+*.tsbuildinfo
+
+# prisma
+apps/api/src/generated/
+
+# env
+.env
+.env.*
+!.env.example
+
+# data / uploads / models
+storage/
+services/vision/models/*.pt
+services/vision/runs/
+services/vision/datasets/
+!services/vision/datasets/README.md
+
+# e2e
+apps/web/test-results/
+apps/web/playwright-report/
+
+# os / ide
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# artefatos temporários / pacotes
+_to_delete/
+*.tar.gz
+*.zip
+
+# chaves e certificados
+*.pem
+*.key
+*.p12

@@ -1,0 +1,270 @@
+/* ─────────────────────────────────────────────────────────────
+   Vision Inspect — tokens e base
+   Linguagem visual: a de um sistema de visão de máquina. Superfícies
+   de aço claro, tinta grafite, petróleo como cor da marca e âmbar de
+   sinalização reservado para o que o sistema "detecta".
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --steel-50: #f3f5f6;
+  --steel-100: #e8ecee;
+  --steel-200: #d5dce0;
+  --steel-300: #b9c3c9;
+  --steel-500: #6c7a83;
+  --ink: #1d272d;
+  --ink-soft: #46545c;
+  --petrol: #0f4c5c;
+  --petrol-600: #0b3a47;
+  --petrol-100: #dcebee;
+  --amber: #e8a317;
+  --amber-100: #fbf0d6;
+  --fault: #b8402f;
+  --fault-100: #f6e1dd;
+  --pass: #2e7a4e;
+  --pass-100: #dcefe3;
+  --white: #ffffff;
+
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-cond: 'IBM Plex Sans Condensed', 'IBM Plex Sans', system-ui, sans-serif;
+
+  /* escala tipográfica (razão ~1.25) */
+  --t-xs: 0.75rem;
+  --t-sm: 0.875rem;
+  --t-md: 1rem;
+  --t-lg: 1.25rem;
+  --t-xl: 1.5625rem;
+  --t-2xl: 1.953rem;
+  --t-3xl: 2.441rem;
+  --t-4xl: clamp(2.6rem, 6vw, 4.6rem);
+
+  --r-sm: 4px;
+  --r-md: 6px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --maxw: 1180px;
+  --focus: 0 0 0 3px rgba(15, 76, 92, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-md);
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--steel-50);
+  font-feature-settings: 'tnum' 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-cond);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--petrol);
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background: var(--amber-100);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ── Controles compartilhados ─────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  font: 500 var(--t-sm) / 1 var(--font-sans);
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--petrol);
+  color: var(--white);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--petrol-600);
+}
+.btn-secondary {
+  background: var(--white);
+  color: var(--ink);
+  border-color: var(--steel-300);
+}
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--ink-soft);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+}
+.btn-ghost:hover:not(:disabled) {
+  color: var(--ink);
+  background: var(--steel-100);
+}
+.btn-danger {
+  background: var(--white);
+  color: var(--fault);
+  border-color: #e3b8b0;
+}
+.btn-lg {
+  min-height: 48px;
+  padding: 0 24px;
+  font-size: var(--t-md);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+.field label {
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.input,
+.select {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 12px;
+  font: inherit;
+  font-size: var(--t-sm);
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--steel-300);
+  border-radius: var(--r-sm);
+}
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--petrol);
+  box-shadow: var(--focus);
+}
+.hint {
+  font-size: var(--t-xs);
+  color: var(--steel-500);
+}
+.error-text {
+  font-size: var(--t-sm);
+  color: var(--fault);
+}
+
+.alert {
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  font-size: var(--t-sm);
+  border: 1px solid;
+}
+.alert-error {
+  background: var(--fault-100);
+  border-color: #e7bcb4;
+  color: #7c2a1f;
+}
+.alert-info {
+  background: var(--petrol-100);
+  border-color: #b9d4da;
+  color: var(--petrol-600);
+}
+.alert-warn {
+  background: var(--amber-100);
+  border-color: #efd28e;
+  color: #6b4a06;
+}
+
+/* status / veredito */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  border-radius: 999px;
+  background: var(--steel-100);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.tag::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.tag-pass {
+  background: var(--pass-100);
+  color: var(--pass);
+}
+.tag-fail {
+  background: var(--fault-100);
+  color: var(--fault);
+}
+.tag-info {
+  background: var(--petrol-100);
+  color: var(--petrol);
+}
+.tag-warn {
+  background: var(--amber-100);
+  color: #8a5d00;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
